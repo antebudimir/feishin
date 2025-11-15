@@ -23,6 +23,10 @@
     display: flex;
     grid-area: image;
     align-items: flex-end;
+    
+    img {
+        border-radius: var(--theme-radius-md);
+    }
 }
 
 .info-column {

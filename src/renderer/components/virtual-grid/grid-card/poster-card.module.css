@@ -25,6 +25,11 @@
     align-items: center;
     aspect-ratio: 1/1;
     overflow: hidden;
+    border-radius: var(--theme-radius-md);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--theme-card-default-bg);
+    border: 2px solid var(--theme-orange-transparent-40);
+    box-shadow: var(--theme-shadow-orange-glow-soft);
 
     &::before {
         position: absolute;
@@ -41,6 +46,13 @@
     }
 
     &:hover {
+        border-color: var(--theme-orange-transparent-70);
+        box-shadow:
+            var(--theme-shadow-orange-glow-medium),
+            0 0 5px var(--theme-orange-transparent-30),
+            0 0 5px var(--theme-orange-transparent-20);
+        transform: scale(1.03);
+
         &::before {
             opacity: 0.5;
         }
@@ -72,7 +84,6 @@
     height: 100% !important;
     max-height: 100%;
     border: 0;
-    border-radius: var(--theme-radius-md);
 
     img {
         height: 100%;
