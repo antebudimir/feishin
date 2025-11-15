@@ -12,13 +12,20 @@
     width: 100%;
     padding: 0.5rem;
     overflow: visible;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     button {
         display: flex;
     }
 
     &:focus-visible {
-        outline: 1px var(--theme-colors-primary-filled) solid;
+        outline: 2px var(--theme-orange-base) solid;
+        box-shadow: var(--theme-shadow-orange-glow-soft);
+    }
+
+    &:hover {
+        transform: scale(1.1);
+        filter: drop-shadow(0 0 8px var(--theme-orange-transparent-40));
     }
 
     &:disabled {
@@ -32,13 +39,21 @@
 
 .player-button.active {
     svg {
-        fill: var(--theme-colors-primary-filled);
+        fill: var(--theme-orange-base);
+        filter: drop-shadow(0 0 6px var(--theme-orange-transparent-50));
     }
 }
 
 .main {
-    background: var(--theme-colors-foreground) !important;
+    background: linear-gradient(135deg, var(--theme-orange-base), var(--theme-orange-medium)) !important;
     border-radius: 50%;
+    box-shadow: var(--theme-shadow-orange-glow-soft);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover {
+        box-shadow: var(--theme-shadow-orange-glow-medium);
+        transform: scale(1.15);
+    }
 
     svg {
         display: flex;

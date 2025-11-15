@@ -7,6 +7,8 @@
     overflow: hidden;
     pointer-events: none;
     background: var(--theme-colors-background);
+    border-bottom: 2px solid var(--theme-orange-transparent-30);
+    box-shadow: 0 4px 12px var(--theme-orange-transparent-10);
     opacity: 0;
 }
 

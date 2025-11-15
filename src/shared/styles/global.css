@@ -32,6 +32,50 @@ html {
     background: var(--theme-colors-background);
 }
 
+body.enable-shimmer::before,
+html.enable-shimmer::before {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    content: '';
+    background: linear-gradient(
+        105deg,
+        transparent 40%,
+        rgb(0 183 255 / 10%) 45%,
+        rgb(0 183 255 / 20%) 50%,
+        rgb(0 183 255 / 10%) 55%,
+        transparent 60%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 8s infinite;
+}
+
+body.enable-scanline::after,
+html.enable-scanline::after {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    content: '';
+    background: linear-gradient(
+        0deg,
+        transparent 0%,
+        rgb(0 255 255 / 3%) 25%,
+        transparent 50%,
+        rgb(0 255 255 / 3%) 75%,
+        transparent 100%
+    );
+    background-size: 100% 200%;
+    animation: scanline 6s linear infinite;
+}
+
 input,
 button,
 textarea,
@@ -57,6 +101,8 @@ img {
 }
 
 #app {
+    position: relative;
+    z-index: 10;
     height: inherit;
 }
 
@@ -116,6 +162,37 @@ button {
 
     to {
         opacity: 0;
+    }
+}
+
+@keyframes float {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 0% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes scanline {
+    0% {
+        background-position: 0 -100vh;
+    }
+
+    100% {
+        background-position: 0 100vh;
     }
 }
 
@@ -263,6 +340,48 @@ button {
 :root {
     --theme-background-noise: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iLjA1IiBkPSJNMCAwaDMwMHYzMDBIMHoiLz48L3N2Zz4=');
     --theme-fullscreen-player-text-shadow: black 0px 0px 10px;
+    --theme-orange-base: rgb(255 142 83);
+    --theme-orange-medium: rgb(255 123 52);
+    --theme-orange-dark: rgb(255 89 0);
+    --theme-orange-transparent-70: rgb(255 142 83 / 70%);
+    --theme-orange-transparent-40: rgb(255 142 83 / 40%);
+    --theme-orange-transparent-30: rgb(255 142 83 / 30%);
+    --theme-orange-transparent-20: rgb(255 142 83 / 20%);
+    --theme-orange-transparent-15: rgb(255 142 83 / 15%);
+    --theme-orange-transparent-10: rgb(255 142 83 / 10%);
+    --theme-cyan-primary: rgb(0 183 255);
+    --theme-cyan-secondary: rgb(0 255 255);
+    --theme-cyan-transparent-80: rgb(0 183 255 / 80%);
+    --theme-cyan-transparent-70: rgb(0 183 255 / 70%);
+    --theme-cyan-transparent-60: rgb(0 183 255 / 60%);
+    --theme-cyan-transparent-50: rgb(0 183 255 / 50%);
+    --theme-cyan-transparent-40: rgb(0 183 255 / 40%);
+    --theme-cyan-transparent-30: rgb(0 183 255 / 30%);
+    --theme-cyan-transparent-20: rgb(0 183 255 / 20%);
+    --theme-cyan-transparent-10: rgb(0 183 255 / 10%);
+    --theme-cyan-transparent-05: rgb(0 183 255 / 5%);
+    --theme-cyan-transparent-03: rgb(0 183 255 / 3%);
+
+    /* Gradients */
+    --theme-primary-gradient: linear-gradient(
+        45deg,
+        var(--theme-orange-dark),
+        var(--theme-orange-medium),
+        var(--theme-orange-base)
+    );
+    --theme-cyan-gradient: linear-gradient(
+        90deg,
+        var(--theme-cyan-primary),
+        var(--theme-cyan-secondary)
+    );
+
+    /* Shadows */
+    --theme-shadow-cyan-glow: 0 0 10px var(--theme-cyan-transparent-30);
+    --theme-shadow-cyan-glow-medium: 0 0 15px var(--theme-cyan-transparent-20);
+    --theme-shadow-orange-glow-soft: 0 4px 12px var(--theme-orange-transparent-15);
+    --theme-shadow-orange-glow-medium:
+        0 6px 20px var(--theme-orange-transparent-30), 0 0 20px var(--theme-orange-transparent-20);
+    --theme-text-shadow-cyan: 0 0 20px var(--theme-cyan-transparent-30);
     --theme-font-size-xs: var(--mantine-font-size-xs);
     --theme-font-size-sm: var(--mantine-font-size-sm);
     --theme-font-size-md: var(--mantine-font-size-md);
