@@ -36,6 +36,7 @@ import { PlaybackType } from '/@/shared/types/types';
 
 const ipc = isElectron() ? window.api.ipc : null;
 const remote = isElectron() ? window.api.remote : null;
+const mpvPlayer = isElectron() ? window.api.mpvPlayer : null;
 
 export const RightControls = () => {
     const { t } = useTranslation();
@@ -218,6 +219,52 @@ export const RightControls = () => {
                 )}
             </Group>
             <Group align="center" gap="xs" wrap="nowrap">
+                {(playbackType === PlaybackType.LOCAL || playbackType === PlaybackType.WEB) && (
+                    <ActionIcon
+                        icon={
+                            playbackSettings.mpvProperties.audioChannels === 'mono'
+                                ? 'volumeNormal'
+                                : playbackSettings.mpvProperties.audioChannels === 'stereo'
+                                  ? 'volumeMax'
+                                  : 'volumeMute'
+                        }
+                        iconProps={{
+                            size: 'lg',
+                        }}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            const current = playbackSettings.mpvProperties.audioChannels || 'auto';
+                            const next =
+                                current === 'auto'
+                                    ? 'mono'
+                                    : current === 'mono'
+                                      ? 'stereo'
+                                      : 'auto';
+                            setSettings({
+                                playback: {
+                                    ...playbackSettings,
+                                    mpvProperties: {
+                                        ...playbackSettings.mpvProperties,
+                                        audioChannels: next,
+                                    },
+                                },
+                            });
+                            // Apply to MPV immediately
+                            mpvPlayer?.setProperties({
+                                'audio-channels': next === 'auto' ? undefined : next,
+                            });
+                        }}
+                        size="sm"
+                        tooltip={{
+                            label:
+                                playbackType === PlaybackType.WEB
+                                    ? `Audio: ${playbackSettings.mpvProperties.audioChannels || 'auto'} (MPV only)`
+                                    : `Audio: ${playbackSettings.mpvProperties.audioChannels || 'auto'}`,
+                            openDelay: 0,
+                        }}
+                        variant="subtle"
+                    />
+                )}
                 <DropdownMenu arrowOffset={12} offset={0} position="top-end" width={425} withArrow>
                     <DropdownMenu.Target>
                         <ActionIcon

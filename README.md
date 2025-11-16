@@ -2,17 +2,21 @@
 
 # Feishin
 
+> **⚠️ Fork Notice**: This is a fork of the original [Feishin](https://github.com/jeffvli/feishin) project. I created this fork primarily to add folder view functionality that the original repo wasn't able to accommodate, along with some other features I found useful. While I'll try to keep this fork in sync with the original repo, that's not the primary focus. Feishin was pretty much perfect for me - I just missed the folder view feature. That said, I'll fix any obvious bugs I encounter, but for full support and the most up-to-date version, please stay with the original repository.
+>
+> **Note**: I primarily use Linux desktop, so only Linux issues can be addressed if needed.
+
   <p align="center">
-    <a href="https://github.com/jeffvli/feishin/blob/main/LICENSE">
-      <img src="https://img.shields.io/github/license/jeffvli/feishin?style=flat-square&color=brightgreen"
+    <a href="https://github.com/antebudimir/feishin/blob/main/LICENSE">
+      <img src="https://img.shields.io/github/license/antebudimir/feishin?style=flat-square&color=brightgreen"
       alt="License">
     </a>
-      <a href="https://github.com/jeffvli/feishin/releases">
-      <img src="https://img.shields.io/github/v/release/jeffvli/feishin?style=flat-square&color=blue"
+      <a href="https://github.com/antebudimir/feishin/releases">
+      <img src="https://img.shields.io/github/v/release/antebudimir/feishin?style=flat-square&color=blue"
       alt="Release">
     </a>
-    <a href="https://github.com/jeffvli/feishin/releases">
-      <img src="https://img.shields.io/github/downloads/jeffvli/feishin/total?style=flat-square&color=orange"
+    <a href="https://github.com/antebudimir/feishin/releases">
+      <img src="https://img.shields.io/github/downloads/antebudimir/feishin/total?style=flat-square&color=orange"
       alt="Downloads">
     </a>
   </p>
@@ -39,17 +43,17 @@ Rewrite of [Sonixd](https://github.com/jeffvli/sonixd).
 - [x] Scrobble playback to your server
 - [x] Smart playlist editor (Navidrome)
 - [x] Synchronized and unsynchronized lyrics support
-- [ ] [Request a feature](https://github.com/jeffvli/feishin/issues) or [view taskboard](https://github.com/users/jeffvli/projects/5/views/1)
+- [ ] [Request a feature](https://github.com/antebudimir/feishin/issues) or [view taskboard](https://github.com/users/jeffvli/projects/5/views/1)
 
 ## Screenshots
 
-<a href="https://raw.githubusercontent.com/jeffvli/feishin/development/media/preview_full_screen_player.png"><img src="https://raw.githubusercontent.com/jeffvli/feishin/development/media/preview_full_screen_player.png" width="49.5%"/></a> <a href="https://raw.githubusercontent.com/jeffvli/feishin/development/media/preview_album_artist_detail.png"><img src="https://raw.githubusercontent.com/jeffvli/feishin/development/media/preview_album_artist_detail.png" width="49.5%"/></a> <a href="https://raw.githubusercontent.com/jeffvli/feishin/development/media/preview_album_detail.png"><img src="https://raw.githubusercontent.com/jeffvli/feishin/development/media/preview_album_detail.png" width="49.5%"/></a> <a href="https://raw.githubusercontent.com/jeffvli/feishin/development/media/preview_smart_playlist.png"><img src="https://raw.githubusercontent.com/jeffvli/feishin/development/media/preview_smart_playlist.png" width="49.5%"/></a>
+<a href="https://raw.githubusercontent.com/antebudimir/feishin/development/media/preview_full_screen_player.png"><img src="https://raw.githubusercontent.com/antebudimir/feishin/development/media/preview_full_screen_player.png" width="49.5%"/></a> <a href="https://raw.githubusercontent.com/antebudimir/feishin/development/media/preview_album_artist_detail.png"><img src="https://raw.githubusercontent.com/antebudimir/feishin/development/media/preview_album_artist_detail.png" width="49.5%"/></a> <a href="https://raw.githubusercontent.com/antebudimir/feishin/development/media/preview_album_detail.png"><img src="https://raw.githubusercontent.com/antebudimir/feishin/development/media/preview_album_detail.png" width="49.5%"/></a> <a href="https://raw.githubusercontent.com/antebudimir/feishin/development/media/preview_smart_playlist.png"><img src="https://raw.githubusercontent.com/antebudimir/feishin/development/media/preview_smart_playlist.png" width="49.5%"/></a>
 
 ## Getting Started
 
 ### Desktop (recommended)
 
-Download the [latest desktop client](https://github.com/jeffvli/feishin/releases). The desktop client is the recommended way to use Feishin. It supports both the MPV and web player backends, as well as includes built-in fetching for lyrics.
+Download the [latest desktop client](https://github.com/antebudimir/feishin/releases). The desktop client is the recommended way to use Feishin. It supports both the MPV and web player backends, as well as includes built-in fetching for lyrics.
 
 #### macOS Notes
 
@@ -62,18 +66,21 @@ For media keys to work, you will be prompted to allow Feishin to be a Trusted Ac
 We provide a small install script to download the latest `.AppImage`, make it executable, and also download the icons required by Desktop Environments. Finally, it generates a `.desktop` file to add Feishin to your Application Launcher.
 
 Simply run the installer like this:
+
 ```sh
 dir=/your/application/directory
 curl 'https://raw.githubusercontent.com/jeffvli/feishin/refs/heads/development/install-feishin-appimage' | sh -s -- "$dir"
 ```
 
 The script also has an option to add launch arguments to run Feishin in native Wayland mode. Note that this is experimental in Electron and therefore not officially supported. If you want to use it, run this instead:
+
 ```sh
 dir=/your/application/directory
 curl 'https://raw.githubusercontent.com/jeffvli/feishin/refs/heads/development/install-feishin-appimage' | sh -s -- "$dir" wayland-native
 ```
 
 It also provides a simple uninstall routine, removing the downloaded files:
+
 ```sh
 dir=/your/application/directory
 curl 'https://raw.githubusercontent.com/jeffvli/feishin/refs/heads/development/install-feishin-appimage' | sh -s -- "$dir" remove
@@ -126,7 +133,7 @@ services:
 2. After restarting the app, you will be prompted to select a server. Click the `Open menu` button and select `Manage servers`. Click the `Add server` button in the popup and fill out all applicable details. You will need to enter the full URL to your server, including the protocol and port if applicable (e.g. `https://navidrome.my-server.com` or `http://192.168.0.1:4533`).
 
 - **Navidrome** - For the best experience, select "Save password" when creating the server and configure the `SessionTimeout` setting in your Navidrome config to a larger value (e.g. 72h).
-    - **Linux users** - The default password store uses `libsecret`. `kwallet4/5/6` are also supported, but must be explicitly set in Settings > Window > Passwords/secret score.
+  - **Linux users** - The default password store uses `libsecret`. `kwallet4/5/6` are also supported, but must be explicitly set in Settings > Window > Passwords/secret score.
 
 3. _Optional_ - If you want to host Feishin on a subpath (not `/`), then pass in the following environment variable: `PUBLIC_PATH=PATH`. For example, to host on `/feishin`, pass in `PUBLIC_PATH=/feishin`.
 
@@ -145,16 +152,16 @@ Feishin supports any music server that implements a [Navidrome](https://www.navi
 - [Navidrome](https://github.com/navidrome/navidrome)
 - [Jellyfin](https://github.com/jellyfin/jellyfin)
 - [OpenSubsonic](https://opensubsonic.netlify.app/) compatible servers, such as...
-    - [Airsonic-Advanced](https://github.com/airsonic-advanced/airsonic-advanced)
-    - [Ampache](https://ampache.org)
-    - [Astiga](https://asti.ga/)
-    - [Funkwhale](https://www.funkwhale.audio/)
-    - [Gonic](https://github.com/sentriz/gonic)
-    - [LMS](https://github.com/epoupon/lms)
-    - [Nextcloud Music](https://apps.nextcloud.com/apps/music)
-    - [Supysonic](https://github.com/spl0k/supysonic)
-    - [Qm-Music](https://github.com/chenqimiao/qm-music)
-    - More (?)
+  - [Airsonic-Advanced](https://github.com/airsonic-advanced/airsonic-advanced)
+  - [Ampache](https://ampache.org)
+  - [Astiga](https://asti.ga/)
+  - [Funkwhale](https://www.funkwhale.audio/)
+  - [Gonic](https://github.com/sentriz/gonic)
+  - [LMS](https://github.com/epoupon/lms)
+  - [Nextcloud Music](https://apps.nextcloud.com/apps/music)
+  - [Supysonic](https://github.com/spl0k/supysonic)
+  - [Qm-Music](https://github.com/chenqimiao/qm-music)
+  - More (?)
 
 ### I have the issue "The SUID sandbox helper binary was found, but is not configured correctly" on Linux
 
@@ -165,7 +172,7 @@ chmod 4755 chrome-sandbox
 sudo chown root:root chrome-sandbox
 ```
 
-Ubuntu 24.04 specifically introduced breaking changes that affect how namespaces work. Please see https://discourse.ubuntu.com/t/ubuntu-24-04-lts-noble-numbat-release-notes/39890#:~:text=security%20improvements%20 for possible fixes.
+Ubuntu 24.04 specifically introduced breaking changes that affect how namespaces work. Please see <https://discourse.ubuntu.com/t/ubuntu-24-04-lts-noble-numbat-release-notes/39890#:~:text=security%20improvements%20> for possible fixes.
 
 ## Development
 

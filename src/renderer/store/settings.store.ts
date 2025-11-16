@@ -124,6 +124,7 @@ const TranscodingConfigSchema = z.object({
 });
 
 const MpvSettingsSchema = z.object({
+    audioChannels: z.enum(['auto', 'mono', 'stereo']).optional(),
     audioExclusiveMode: z.enum(['no', 'yes']),
     audioFormat: z.enum(['float', 's16', 's32']).optional(),
     audioSampleRateHz: z.number().optional(),
@@ -657,9 +658,10 @@ const initialState: SettingsState = {
         mediaSession: false,
         mpvExtraParameters: [],
         mpvProperties: {
+            audioChannels: 'auto',
             audioExclusiveMode: 'no',
             audioFormat: undefined,
-            audioSampleRateHz: 0,
+            audioSampleRateHz: 48000,
             gaplessAudio: 'weak',
             replayGainClip: true,
             replayGainFallbackDB: undefined,
@@ -678,7 +680,7 @@ const initialState: SettingsState = {
         transcode: {
             enabled: false,
         },
-        type: PlaybackType.WEB,
+        type: PlaybackType.LOCAL,
         webAudio: true,
     },
     remote: {

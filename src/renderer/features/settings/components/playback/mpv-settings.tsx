@@ -32,6 +32,8 @@ export const getMpvSetting = (
     value: any,
 ) => {
     switch (key) {
+        case 'audioChannels':
+            return { 'audio-channels': value === 'auto' ? undefined : value };
         case 'audioExclusiveMode':
             return { 'audio-exclusive': value || 'no' };
         case 'audioSampleRateHz':
@@ -53,6 +55,7 @@ export const getMpvSetting = (
 
 export const getMpvProperties = (settings: SettingsState['playback']['mpvProperties']) => {
     const properties: Record<string, any> = {
+        'audio-channels': settings.audioChannels === 'auto' ? undefined : settings.audioChannels,
         'audio-exclusive': settings.audioExclusiveMode || 'no',
         'audio-samplerate':
             settings.audioSampleRateHz === 0 ? undefined : settings.audioSampleRateHz,
@@ -270,6 +273,22 @@ export const MpvSettings = () => {
             }),
             isHidden: settings.type !== PlaybackType.LOCAL,
             title: t('setting.gaplessAudio', { postProcess: 'sentenceCase' }),
+        },
+        {
+            control: (
+                <Select
+                    data={[
+                        { label: 'Auto', value: 'auto' },
+                        { label: 'Mono', value: 'mono' },
+                        { label: 'Stereo', value: 'stereo' },
+                    ]}
+                    defaultValue={settings.mpvProperties.audioChannels || 'auto'}
+                    onChange={(e) => handleSetMpvProperty('audioChannels', e)}
+                />
+            ),
+            description: 'Select the audio channel mode. Auto lets MPV decide based on the source.',
+            isHidden: settings.type !== PlaybackType.LOCAL,
+            title: 'Audio Channels',
         },
         {
             control: (
