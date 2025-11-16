@@ -287,6 +287,7 @@ const TranscodingConfigSchema = z.object({
 });
 
 const MpvSettingsSchema = z.object({
+    audioChannels: z.enum(['auto', 'mono', 'stereo']).optional(),
     audioExclusiveMode: z.enum(['no', 'yes']),
     audioFormat: z.enum(['float', 's16', 's32']).optional(),
     audioSampleRateHz: z.number().optional(),
@@ -1360,6 +1361,7 @@ const initialState: SettingsState = {
         combinedLyricsAndVisualizer: false,
         confirmQueueChanges: true,
         disabledContextMenu: {},
+        enableGridMultiSelect: false,
         enableScanlineEffect: true,
         enableShimmerEffect: true,
         externalLinks: true,
@@ -2117,9 +2119,10 @@ const initialState: SettingsState = {
         mpvAudioDeviceId: undefined,
         mpvExtraParameters: [],
         mpvProperties: {
+            audioChannels: 'stereo',
             audioExclusiveMode: 'no',
             audioFormat: undefined,
-            audioSampleRateHz: 0,
+            audioSampleRateHz: 48000,
             gaplessAudio: 'weak',
             replayGainClip: true,
             replayGainFallbackDB: undefined,
@@ -2139,7 +2142,7 @@ const initialState: SettingsState = {
         transcode: {
             enabled: false,
         },
-        type: PlayerType.WEB,
+        type: PlayerType.LOCAL,
         webAudio: true,
     },
     queryBuilder: {

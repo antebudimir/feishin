@@ -209,6 +209,23 @@ export const MpvSettings = memo(() => {
         },
         {
             control: (
+                <Select
+                    data={[
+                        { label: 'Mono', value: 'mono' },
+                        { label: 'Stereo', value: 'stereo' },
+                    ]}
+                    defaultValue={
+                        settings.mpvProperties.audioChannels === 'mono' ? 'mono' : 'stereo'
+                    }
+                    onChange={(e) => handleSetMpvProperty('audioChannels', e)}
+                />
+            ),
+            description: 'Select the audio channel mode. Mono downmixes both channels into one.',
+            isHidden: settings.type !== PlayerType.LOCAL,
+            title: 'Audio Channels',
+        },
+        {
+            control: (
                 <NumberInput
                     defaultValue={settings.mpvProperties.audioSampleRateHz || undefined}
                     max={192000}

@@ -1,4 +1,5 @@
 import { t } from 'i18next';
+import isElectron from 'is-electron';
 import { useCallback, useEffect, useMemo, useState, WheelEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -10,6 +11,7 @@ import { CustomPlayerbarSlider } from '/@/renderer/features/player/components/pl
 import { SleepTimerButton } from '/@/renderer/features/player/components/sleep-timer-button';
 import { usePlayer } from '/@/renderer/features/player/context/player-context';
 import { useAudioDevices } from '/@/renderer/features/settings/components/playback/audio-settings';
+import { getAudioChannelsFilter } from '/@/renderer/features/settings/components/playback/mpv-properties';
 import {
     ListConfigBooleanControl,
     ListConfigTable,
@@ -84,6 +86,7 @@ const calculateVolumeDown = (volume: number, volumeWheelStep: number) => {
 
     return volumeToSet;
 };
+const mpvPlayer = isElectron() ? window.api.mpvPlayer : null;
 
 export const RightControls = () => {
     const showRatings = useShowRatings();
@@ -634,6 +637,49 @@ const VolumeButton = () => {
                      * reliably opens the menu.
                      */}
                     <div style={{ alignItems: 'center', display: 'flex' }}>
+                        {playbackType === PlayerType.LOCAL || playbackType === PlayerType.WEB ? (
+                            <ActionIcon
+                                icon={
+                                    playbackSettings.mpvProperties.audioChannels === 'mono'
+                                        ? 'minus'
+                                        : 'audioLines'
+                                }
+                                iconProps={{
+                                    size: 'lg',
+                                }}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    const next =
+                                        playbackSettings.mpvProperties.audioChannels === 'mono'
+                                            ? 'stereo'
+                                            : 'mono';
+                                    setSettings({
+                                        playback: {
+                                            ...playbackSettings,
+                                            mpvProperties: {
+                                                ...playbackSettings.mpvProperties,
+                                                audioChannels: next,
+                                            },
+                                        },
+                                    });
+                                    // Apply to MPV immediately, using an audio
+                                    // filter to avoid restarting the track
+                                    mpvPlayer?.setProperties({
+                                        af: getAudioChannelsFilter(next),
+                                    });
+                                }}
+                                size="sm"
+                                tooltip={{
+                                    label: `Audio: ${
+                                        playbackSettings.mpvProperties.audioChannels === 'mono'
+                                            ? 'Mono'
+                                            : 'Stereo'
+                                    }${playbackType === PlayerType.WEB ? ' (MPV only)' : ''}`,
+                                    openDelay: 0,
+                                }}
+                                variant="subtle"
+                            />
+                        ) : null}
                         <ActionIcon
                             icon={muted ? 'volumeMute' : volume > 50 ? 'volumeMax' : 'volumeNormal'}
                             iconProps={{

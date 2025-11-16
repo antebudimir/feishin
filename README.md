@@ -2,17 +2,21 @@
 
 # Feishin
 
+> **⚠️ Fork Notice**: This is a fork of the original [Feishin](https://github.com/jeffvli/feishin) project. I created this fork primarily to add folder view functionality that the original repo wasn't able to accommodate, along with some other features I found useful. While I'll try to keep this fork in sync with the original repo, that's not the primary focus. Feishin was pretty much perfect for me - I just missed the folder view feature. That said, I'll fix any obvious bugs I encounter, but for full support and the most up-to-date version, please stay with the original repository.
+>
+> **Note**: I primarily use Linux desktop, so only Linux issues can be addressed if needed.
+
   <p align="center">
-    <a href="https://github.com/jeffvli/feishin/blob/main/LICENSE">
-      <img src="https://img.shields.io/github/license/jeffvli/feishin?style=flat-square&color=brightgreen"
+    <a href="https://github.com/antebudimir/feishin/blob/main/LICENSE">
+      <img src="https://img.shields.io/github/license/antebudimir/feishin?style=flat-square&color=brightgreen"
       alt="License">
     </a>
-      <a href="https://github.com/jeffvli/feishin/releases">
-      <img src="https://img.shields.io/github/v/release/jeffvli/feishin?style=flat-square&color=blue"
+      <a href="https://github.com/antebudimir/feishin/releases">
+      <img src="https://img.shields.io/github/v/release/antebudimir/feishin?style=flat-square&color=blue"
       alt="Release">
     </a>
-    <a href="https://github.com/jeffvli/feishin/releases">
-      <img src="https://img.shields.io/github/downloads/jeffvli/feishin/total?style=flat-square&color=orange"
+    <a href="https://github.com/antebudimir/feishin/releases">
+      <img src="https://img.shields.io/github/downloads/antebudimir/feishin/total?style=flat-square&color=orange"
       alt="Downloads">
     </a>
   </p>
@@ -39,7 +43,7 @@ Rewrite of [Sonixd](https://github.com/jeffvli/sonixd).
 - [x] Scrobble playback to your server
 - [x] Smart playlist editor (Navidrome)
 - [x] Synchronized and unsynchronized lyrics support
-- [ ] [Request a feature](https://github.com/jeffvli/feishin/issues) or [view taskboard](https://github.com/users/jeffvli/projects/5/views/1)
+- [ ] [Request a feature](https://github.com/antebudimir/feishin/issues) or [view taskboard](https://github.com/users/jeffvli/projects/5/views/1)
 
 ## Screenshots
 
@@ -49,7 +53,7 @@ Rewrite of [Sonixd](https://github.com/jeffvli/sonixd).
 
 ### Desktop (recommended)
 
-Download the [latest desktop client](https://github.com/jeffvli/feishin/releases). The desktop client is the recommended way to use Feishin. It supports both the MPV and web player backends, as well as includes built-in fetching for lyrics.
+Download the [latest desktop client](https://github.com/antebudimir/feishin/releases). The desktop client is the recommended way to use Feishin. It supports both the MPV and web player backends, as well as includes built-in fetching for lyrics.
 
 #### macOS Notes
 
@@ -156,16 +160,16 @@ Feishin supports any music server that implements a [Navidrome](https://www.navi
 - [Navidrome](https://github.com/navidrome/navidrome)
 - [Jellyfin](https://github.com/jellyfin/jellyfin)
 - [OpenSubsonic](https://opensubsonic.netlify.app/) compatible servers, such as...
-    - [Airsonic-Advanced](https://github.com/airsonic-advanced/airsonic-advanced)
-    - [Ampache](https://ampache.org)
-    - [Astiga](https://asti.ga/)
-    - [Funkwhale](https://www.funkwhale.audio/)
-    - [Gonic](https://github.com/sentriz/gonic)
-    - [LMS](https://github.com/epoupon/lms)
-    - [Nextcloud Music](https://apps.nextcloud.com/apps/music)
-    - [Supysonic](https://github.com/spl0k/supysonic)
-    - [Qm-Music](https://github.com/chenqimiao/qm-music)
-    - More (?)
+  - [Airsonic-Advanced](https://github.com/airsonic-advanced/airsonic-advanced)
+  - [Ampache](https://ampache.org)
+  - [Astiga](https://asti.ga/)
+  - [Funkwhale](https://www.funkwhale.audio/)
+  - [Gonic](https://github.com/sentriz/gonic)
+  - [LMS](https://github.com/epoupon/lms)
+  - [Nextcloud Music](https://apps.nextcloud.com/apps/music)
+  - [Supysonic](https://github.com/spl0k/supysonic)
+  - [Qm-Music](https://github.com/chenqimiao/qm-music)
+  - More (?)
 
 - [Plex](https://www.plex.tv/media-server-downloads)
     - [Feishin fork by lux032](https://github.com/lux032/feishin) - Plex is not natively supported. Use the fork by lux032 to use Plex with Feishin.
@@ -179,7 +183,7 @@ chmod 4755 chrome-sandbox
 sudo chown root:root chrome-sandbox
 ```
 
-Ubuntu 24.04 specifically introduced breaking changes that affect how namespaces work. Please see https://discourse.ubuntu.com/t/ubuntu-24-04-lts-noble-numbat-release-notes/39890#:~:text=security%20improvements%20 for possible fixes.
+Ubuntu 24.04 specifically introduced breaking changes that affect how namespaces work. Please see <https://discourse.ubuntu.com/t/ubuntu-24-04-lts-noble-numbat-release-notes/39890#:~:text=security%20improvements%20> for possible fixes.
 
 ### How can I add custom themes?
 

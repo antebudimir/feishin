@@ -1,7 +1,7 @@
 import type { RefObject } from 'react';
 
 import isElectron from 'is-electron';
-import { useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 
 import { playerHandoff } from './player-handoff';
 
@@ -68,6 +68,14 @@ export const MpvPlayerEngine = (props: MpvPlayerEngineProps) => {
     const { mpvAudioDeviceId, transcode } = usePlaybackSettings();
     const mpvExtraParameters = useSettingsStore((store) => store.playback.mpvExtraParameters);
     const mpvProperties = useSettingsStore((store) => store.playback.mpvProperties);
+    // audioChannels is intentionally excluded from this key: it is applied live
+    // via the `af` audio filter (see right-controls / mpv-settings) and must
+    // not trigger a full mpv re-initialization, which restarts playback. The
+    // full properties are read fresh inside the init effect from the store.
+    const mpvPropertiesReloadKey = useMemo(
+        () => JSON.stringify({ ...mpvProperties, audioChannels: undefined }),
+        [mpvProperties],
+    );
     const [reloadTrigger, setReloadTrigger] = useState(0);
 
     useEffect(() => {
@@ -120,7 +128,7 @@ export const MpvPlayerEngine = (props: MpvPlayerEngineProps) => {
 
             // Initialize mpv with fresh state
             const properties: Record<string, any> = {
-                ...getMpvProperties(mpvProperties),
+                ...getMpvProperties(useSettingsStore.getState().playback.mpvProperties),
                 'audio-pitch-correction': preservePitch === false ? 'no' : 'yes',
                 speed: speed,
                 volume: volume,
@@ -215,7 +223,7 @@ export const MpvPlayerEngine = (props: MpvPlayerEngineProps) => {
         // update callbacks in usePlayerEvents.
         // reloadTrigger is included to allow manual reload via MPV_RELOAD event.
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [mpvExtraParameters, mpvProperties, mpvAudioDeviceId, reloadTrigger]);
+    }, [mpvExtraParameters, mpvPropertiesReloadKey, mpvAudioDeviceId, reloadTrigger]);
 
     // Update volume
     useEffect(() => {
