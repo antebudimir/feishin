@@ -76,6 +76,8 @@ const HomeItemSchema = z.enum([
     'recentlyAdded',
     'recentlyPlayed',
     'recentlyReleased',
+    'starredAlbums',
+    'starredTracks',
 ]);
 
 const AlbumGroupItemSchema = z.enum([
@@ -530,6 +532,8 @@ export const GeneralSettingsSchema = z.object({
     confirmQueueChanges: z.boolean(),
     disabledContextMenu: z.record(z.string(), z.boolean()),
     enableGridMultiSelect: z.boolean(),
+    enableScanlineEffect: z.boolean(),
+    enableShimmerEffect: z.boolean(),
     externalLinks: z.boolean(),
     followCurrentSong: z.boolean(),
     followSystemTheme: z.boolean(),
@@ -983,6 +987,8 @@ export enum HomeItem {
     RECENTLY_ADDED = 'recentlyAdded',
     RECENTLY_PLAYED = 'recentlyPlayed',
     RECENTLY_RELEASED = 'recentlyReleased',
+    STARRED_ALBUMS = 'starredAlbums',
+    STARRED_TRACKS = 'starredTracks',
 }
 
 export enum PlayerbarSliderType {
@@ -1332,7 +1338,7 @@ const initialState: SettingsState = {
         type: FontType.SYSTEM,
     },
     general: {
-        accent: 'rgb(214, 46, 83)',
+        accent: 'rgb(255, 142, 83)',
         albumBackground: true,
         albumBackgroundBlur: 50,
         albumGroupImageSize: 0,
@@ -1354,7 +1360,8 @@ const initialState: SettingsState = {
         combinedLyricsAndVisualizer: false,
         confirmQueueChanges: true,
         disabledContextMenu: {},
-        enableGridMultiSelect: false,
+        enableScanlineEffect: true,
+        enableShimmerEffect: true,
         externalLinks: true,
         followCurrentSong: true,
         followSystemTheme: false,

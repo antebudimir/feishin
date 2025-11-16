@@ -1,12 +1,12 @@
 .container {
     width: 100vw;
     height: 100%;
-    border-top: 2px solid var(--theme-orange-transparent-40);
     background: linear-gradient(
         180deg,
         var(--theme-colors-background) 0%,
-        rgba(2, 26, 26, 0.95) 100%
+        rgb(2 26 26 / 95%) 100%
     );
+    border-top: 2px solid var(--theme-orange-transparent-40);
     box-shadow: 0 -4px 12px var(--theme-orange-transparent-15);
 }
 

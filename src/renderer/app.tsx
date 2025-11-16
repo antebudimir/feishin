@@ -21,6 +21,7 @@ import {
     useCssSettings,
     useHotkeySettings,
     useLanguage,
+    useSettingsStore,
     useSettingsStoreActions,
 } from '/@/renderer/store';
 import { initCustomThemes } from '/@/renderer/store/custom-themes.store';
@@ -123,6 +124,7 @@ const AppEffects = () => (
         <FullscreenToggleEffect />
         <FullscreenAutoOpenEffect />
         <InputFocusEffect />
+        <VisualEffectsEffect />
     </>
 );
 
@@ -274,6 +276,31 @@ const FullscreenToggleEffect = () => {
 
 const FullscreenAutoOpenEffect = () => {
     useFullscreenAutoOpen();
+
+    return null;
+};
+
+const VisualEffectsEffect = () => {
+    const enableScanlineEffect = useSettingsStore((store) => store.general.enableScanlineEffect);
+    const enableShimmerEffect = useSettingsStore((store) => store.general.enableShimmerEffect);
+
+    useEffect(() => {
+        if (enableScanlineEffect) {
+            document.body.classList.add('enable-scanline');
+            document.documentElement.classList.add('enable-scanline');
+        } else {
+            document.body.classList.remove('enable-scanline');
+            document.documentElement.classList.remove('enable-scanline');
+        }
+
+        if (enableShimmerEffect) {
+            document.body.classList.add('enable-shimmer');
+            document.documentElement.classList.add('enable-shimmer');
+        } else {
+            document.body.classList.remove('enable-shimmer');
+            document.documentElement.classList.remove('enable-shimmer');
+        }
+    }, [enableScanlineEffect, enableShimmerEffect]);
 
     return null;
 };

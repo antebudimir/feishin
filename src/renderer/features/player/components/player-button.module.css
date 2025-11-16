@@ -24,7 +24,6 @@
     }
 
     &:hover {
-        transform: scale(1.1);
         filter: drop-shadow(0 0 8px var(--theme-orange-transparent-40));
     }
 
@@ -39,20 +38,23 @@
 
 .player-button.active {
     svg {
-        fill: var(--theme-orange-base);
         filter: drop-shadow(0 0 6px var(--theme-orange-transparent-50));
+        fill: var(--theme-orange-base);
     }
 }
 
 .main {
-    background: linear-gradient(135deg, var(--theme-orange-base), var(--theme-orange-medium)) !important;
+    background: linear-gradient(
+        135deg,
+        var(--theme-orange-base),
+        var(--theme-orange-medium)
+    ) !important;
     border-radius: 50%;
     box-shadow: var(--theme-shadow-orange-glow-soft);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     &:hover {
         box-shadow: var(--theme-shadow-orange-glow-medium);
-        transform: scale(1.15);
     }
 
     svg {
