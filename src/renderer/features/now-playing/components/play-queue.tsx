@@ -11,7 +11,15 @@ import { useMergedRef } from '@mantine/hooks';
 import '@ag-grid-community/styles/ag-theme-alpine.css';
 import isElectron from 'is-electron';
 import debounce from 'lodash/debounce';
-import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import {
+    forwardRef,
+    useCallback,
+    useEffect,
+    useImperativeHandle,
+    useMemo,
+    useRef,
+    useState,
+} from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import { VirtualGridAutoSizerContainer } from '/@/renderer/components/virtual-grid/virtual-grid-wrapper';
@@ -28,6 +36,7 @@ import {
     useCurrentStatus,
     useDefaultQueue,
     usePlayerControls,
+    usePlayerStore,
     usePreviousSong,
     useQueueControls,
     useVolume,
@@ -53,9 +62,10 @@ type QueueProps = {
 
 export const PlayQueue = forwardRef(({ searchTerm, type }: QueueProps, ref: Ref<any>) => {
     const tableRef = useRef<AgGridReactType | null>(null);
+    const containerRef = useRef<HTMLDivElement | null>(null);
     const mergedRef = useMergedRef(ref, tableRef);
     const queue = useDefaultQueue();
-    const { reorderQueue, setCurrentTrack } = useQueueControls();
+    const { removeFromQueue, reorderQueue, setCurrentTrack } = useQueueControls();
     const currentSong = useCurrentSong();
     const previousSong = usePreviousSong();
     const status = useCurrentStatus();
@@ -257,42 +267,98 @@ export const PlayQueue = forwardRef(({ searchTerm, type }: QueueProps, ref: Ref<
 
     const onCellContextMenu = useHandleTableContextMenu(LibraryItem.SONG, QUEUE_CONTEXT_MENU_ITEMS);
 
+    const handleKeyDown = useCallback(
+        (event: KeyboardEvent) => {
+            // Check if Delete or Backspace key was pressed
+            if (event.key === 'Delete' || event.key === 'Backspace') {
+                const { api } = tableRef?.current || {};
+                if (!api) return;
+
+                const selectedNodes = api.getSelectedNodes();
+                if (!selectedNodes || selectedNodes.length === 0) return;
+
+                const uniqueIds = selectedNodes.map((node) => node.data?.uniqueId).filter(Boolean);
+                if (!uniqueIds.length) return;
+
+                const currentSongState = usePlayerStore.getState().current.song;
+                const playerData = removeFromQueue(uniqueIds as string[]);
+                const isCurrentSongRemoved =
+                    currentSongState && uniqueIds.includes(currentSongState?.uniqueId);
+
+                if (playbackType === PlaybackType.LOCAL) {
+                    if (isCurrentSongRemoved) {
+                        setQueue(playerData, false);
+                    } else {
+                        setQueueNext(playerData);
+                    }
+                }
+
+                api.redrawRows();
+
+                if (isCurrentSongRemoved) {
+                    updateSong(playerData.current.song);
+                }
+
+                event.preventDefault();
+            }
+        },
+        [playbackType, removeFromQueue],
+    );
+
+    // Add keyboard event listener to container
+    useEffect(() => {
+        const container = containerRef.current;
+        if (!container) return;
+
+        container.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            container.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [handleKeyDown]);
+
     return (
         <ErrorBoundary FallbackComponent={ErrorFallback}>
-            <VirtualGridAutoSizerContainer>
-                <VirtualTable
-                    alwaysShowHorizontalScroll
-                    autoFitColumns={tableConfig.autoFit}
-                    columnDefs={columnDefs}
-                    context={{
-                        currentSong,
-                        handleDoubleClick,
-                        isFocused,
-                        isQueue: true,
-                        itemType: LibraryItem.SONG,
-                        onCellContextMenu,
-                        status,
-                    }}
-                    deselectOnClickOutside={type === 'fullScreen'}
-                    getRowId={(data) => data.data.uniqueId}
-                    onCellContextMenu={onCellContextMenu}
-                    onCellDoubleClicked={handleDoubleClick}
-                    onColumnMoved={handleColumnChange}
-                    onColumnResized={debouncedColumnChange}
-                    onDragStarted={handleDragStart}
-                    onGridReady={handleGridReady}
-                    onGridSizeChanged={handleGridSizeChange}
-                    onRowDragEnd={handleDragEnd}
-                    ref={mergedRef}
-                    rowBuffer={50}
-                    rowClassRules={rowClassRules}
-                    rowData={songs}
-                    rowDragEntireRow
-                    rowDragMultiRow
-                    rowHeight={tableConfig.rowHeight || 40}
-                    suppressCellFocus={type === 'fullScreen'}
-                />
-            </VirtualGridAutoSizerContainer>
+            <div
+                ref={containerRef}
+                style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%' }}
+                tabIndex={0}
+            >
+                <VirtualGridAutoSizerContainer>
+                    <VirtualTable
+                        alwaysShowHorizontalScroll
+                        autoFitColumns={tableConfig.autoFit}
+                        columnDefs={columnDefs}
+                        context={{
+                            currentSong,
+                            handleDoubleClick,
+                            isFocused,
+                            isQueue: true,
+                            itemType: LibraryItem.SONG,
+                            onCellContextMenu,
+                            status,
+                        }}
+                        deselectOnClickOutside={type === 'fullScreen'}
+                        getRowId={(data) => data.data.uniqueId}
+                        onCellContextMenu={onCellContextMenu}
+                        onCellDoubleClicked={handleDoubleClick}
+                        onColumnMoved={handleColumnChange}
+                        onColumnResized={debouncedColumnChange}
+                        onDragStarted={handleDragStart}
+                        onGridReady={handleGridReady}
+                        onGridSizeChanged={handleGridSizeChange}
+                        onRowDragEnd={handleDragEnd}
+                        ref={mergedRef}
+                        rowBuffer={50}
+                        rowClassRules={rowClassRules}
+                        rowData={songs}
+                        rowDragEntireRow
+                        rowDragMultiRow
+                        rowHeight={tableConfig.rowHeight || 40}
+                        suppressCellFocus={type === 'fullScreen'}
+                    />
+                </VirtualGridAutoSizerContainer>
+            </div>
         </ErrorBoundary>
     );
 });

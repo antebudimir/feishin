@@ -22,10 +22,10 @@
     aspect-ratio: 1/1;
     overflow: hidden;
     background: var(--theme-card-default-bg);
-    border-radius: var(--theme-radius-md);
     border: 2px solid var(--theme-orange-transparent-40);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: var(--theme-radius-md);
     box-shadow: var(--theme-shadow-orange-glow-soft);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     &::before {
         position: absolute;
@@ -47,7 +47,6 @@
             var(--theme-shadow-orange-glow-medium),
             0 0 5px var(--theme-orange-transparent-30),
             0 0 5px var(--theme-orange-transparent-20);
-        transform: scale(1.03);
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
         &::before {

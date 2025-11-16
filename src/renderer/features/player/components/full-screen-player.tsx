@@ -429,7 +429,9 @@ export const FullScreenPlayer = () => {
     });
 
     // Convert RGB to RGB with opacity for scanline effect
-    const scanlineColor = background ? background.replace('rgb', 'rgba').replace(')', ', 0.15)') : 'rgba(0, 255, 255, 0.15)';
+    const scanlineColor = background
+        ? background.replace('rgb', 'rgba').replace(')', ', 0.15)')
+        : 'rgba(0, 255, 255, 0.15)';
 
     const imageUrl = currentSong?.imageUrl && currentSong.imageUrl.replace(/size=\d+/g, 'size=500');
     const backgroundImage =
@@ -460,7 +462,7 @@ export const FullScreenPlayer = () => {
                     }
                 />
             )}
-            <div 
+            <div
                 className={styles.scanlineOverlay}
                 style={
                     {

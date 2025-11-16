@@ -46,21 +46,22 @@
     z-index: 1;
     width: 100%;
     height: 100%;
+    pointer-events: none;
     background: linear-gradient(
         0deg,
         transparent 0%,
-        var(--album-color, rgba(0, 255, 255, 0.15)) 50%,
+        var(--album-color, rgb(0 255 255 / 15%)) 50%,
         transparent 100%
     );
     background-size: 100% 200%;
     animation: scanline 6s linear infinite;
-    pointer-events: none;
 }
 
 @keyframes scanline {
     0% {
         background-position: 0 -100vh;
     }
+
     100% {
         background-position: 0 100vh;
     }

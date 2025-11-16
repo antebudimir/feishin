@@ -51,6 +51,8 @@ const utils = isElectron() ? window.api.utils : null;
 export const App = () => {
     const { mode, theme } = useAppTheme();
     const language = useSettingsStore((store) => store.general.language);
+    const enableScanlineEffect = useSettingsStore((store) => store.general.enableScanlineEffect);
+    const enableShimmerEffect = useSettingsStore((store) => store.general.enableShimmerEffect);
 
     const { content, enabled } = useCssSettings();
     const { type: playbackType } = usePlaybackSettings();
@@ -187,6 +189,24 @@ export const App = () => {
             i18n.changeLanguage(language);
         }
     }, [language]);
+
+    useEffect(() => {
+        if (enableScanlineEffect) {
+            document.body.classList.add('enable-scanline');
+            document.documentElement.classList.add('enable-scanline');
+        } else {
+            document.body.classList.remove('enable-scanline');
+            document.documentElement.classList.remove('enable-scanline');
+        }
+
+        if (enableShimmerEffect) {
+            document.body.classList.add('enable-shimmer');
+            document.documentElement.classList.add('enable-shimmer');
+        } else {
+            document.body.classList.remove('enable-shimmer');
+            document.documentElement.classList.remove('enable-shimmer');
+        }
+    }, [enableScanlineEffect, enableShimmerEffect]);
 
     return (
         <MantineProvider forceColorScheme={mode} theme={theme}>

@@ -2,11 +2,14 @@ import { DraggableItems } from '/@/renderer/features/settings/components/general
 import { HomeItem, useGeneralSettings, useSettingsStoreActions } from '/@/renderer/store';
 
 const HOME_ITEMS: Array<[string, string]> = [
-    [HomeItem.RANDOM, 'page.home.explore'],
+    [HomeItem.FLASHBACK, 'page.home.flashback'],
     [HomeItem.RECENTLY_PLAYED, 'page.home.recentlyPlayed'],
+    [HomeItem.RANDOM, 'page.home.explore'],
     [HomeItem.RECENTLY_ADDED, 'page.home.newlyAdded'],
-    [HomeItem.RECENTLY_RELEASED, 'page.home.recentlyReleased'],
+    [HomeItem.STARRED_ALBUMS, 'page.home.starredAlbums'],
+    [HomeItem.STARRED_TRACKS, 'page.home.starredTracks'],
     [HomeItem.MOST_PLAYED, 'page.home.mostPlayed'],
+    [HomeItem.RECENTLY_RELEASED, 'page.home.recentlyReleased'],
 ];
 
 export const HomeSettings = () => {

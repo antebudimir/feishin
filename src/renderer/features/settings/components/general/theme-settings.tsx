@@ -161,6 +161,48 @@ export const ThemeSettings = () => {
             }),
             title: t('setting.accentColor', { postProcess: 'sentenceCase' }),
         },
+        {
+            control: (
+                <Switch
+                    checked={settings.enableShimmerEffect}
+                    onChange={(e) => {
+                        setSettings({
+                            general: {
+                                ...settings,
+                                enableShimmerEffect: e.currentTarget.checked,
+                            },
+                        });
+                    }}
+                />
+            ),
+            description: t('setting.enableShimmerEffect', {
+                context: 'description',
+                postProcess: 'sentenceCase',
+            }),
+            isHidden: false,
+            title: t('setting.enableShimmerEffect', { postProcess: 'sentenceCase' }),
+        },
+        {
+            control: (
+                <Switch
+                    checked={settings.enableScanlineEffect}
+                    onChange={(e) => {
+                        setSettings({
+                            general: {
+                                ...settings,
+                                enableScanlineEffect: e.currentTarget.checked,
+                            },
+                        });
+                    }}
+                />
+            ),
+            description: t('setting.enableScanlineEffect', {
+                context: 'description',
+                postProcess: 'sentenceCase',
+            }),
+            isHidden: false,
+            title: t('setting.enableScanlineEffect', { postProcess: 'sentenceCase' }),
+        },
     ];
 
     return <SettingsSection options={themeOptions} />;

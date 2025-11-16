@@ -28,11 +28,14 @@ import {
 } from '/@/shared/types/types';
 
 const HomeItemSchema = z.enum([
+    'flashback',
     'mostPlayed',
     'random',
     'recentlyAdded',
     'recentlyPlayed',
     'recentlyReleased',
+    'starredAlbums',
+    'starredTracks',
 ]);
 
 const ArtistItemSchema = z.enum([
@@ -177,6 +180,8 @@ const GeneralSettingsSchema = z.object({
     buttonSize: z.number(),
     disabledContextMenu: z.record(z.boolean()),
     doubleClickQueueAll: z.boolean(),
+    enableScanlineEffect: z.boolean(),
+    enableShimmerEffect: z.boolean(),
     externalLinks: z.boolean(),
     followSystemTheme: z.boolean(),
     genreTarget: GenreTargetSchema,
@@ -388,11 +393,14 @@ export enum GenreTarget {
 }
 
 export enum HomeItem {
+    FLASHBACK = 'flashback',
     MOST_PLAYED = 'mostPlayed',
     RANDOM = 'random',
     RECENTLY_ADDED = 'recentlyAdded',
     RECENTLY_PLAYED = 'recentlyPlayed',
     RECENTLY_RELEASED = 'recentlyReleased',
+    STARRED_ALBUMS = 'starredAlbums',
+    STARRED_TRACKS = 'starredTracks',
 }
 
 export type DataTableProps = z.infer<typeof DataTablePropsSchema>;
@@ -495,10 +503,16 @@ export const sidebarItems: SidebarItemType[] = [
     },
 ];
 
-const homeItems = Object.values(HomeItem).map((item) => ({
-    disabled: false,
-    id: item,
-}));
+const homeItems: SortableItem<HomeItem>[] = [
+    { disabled: false, id: HomeItem.FLASHBACK },
+    { disabled: false, id: HomeItem.RECENTLY_PLAYED },
+    { disabled: false, id: HomeItem.RANDOM },
+    { disabled: false, id: HomeItem.RECENTLY_ADDED },
+    { disabled: false, id: HomeItem.STARRED_ALBUMS },
+    { disabled: false, id: HomeItem.STARRED_TRACKS },
+    { disabled: false, id: HomeItem.MOST_PLAYED },
+    { disabled: true, id: HomeItem.RECENTLY_RELEASED },
+];
 
 const artistItems = Object.values(ArtistItem).map((item) => ({
     disabled: false,
@@ -534,7 +548,7 @@ const initialState: SettingsState = {
         type: FontType.SYSTEM,
     },
     general: {
-        accent: 'rgb(214, 46, 83)',
+        accent: 'rgb(255, 142, 83)',
         albumArtRes: undefined,
         albumBackground: true,
         albumBackgroundBlur: 50,
@@ -544,6 +558,8 @@ const initialState: SettingsState = {
         buttonSize: 25,
         disabledContextMenu: {},
         doubleClickQueueAll: false,
+        enableScanlineEffect: true,
+        enableShimmerEffect: true,
         externalLinks: true,
         followSystemTheme: false,
         genreTarget: GenreTarget.ALBUM,
@@ -558,7 +574,7 @@ const initialState: SettingsState = {
         playButtonBehavior: Play.NOW,
         playerbarOpenDrawer: false,
         resume: true,
-        showQueueDrawerButton: true,
+        showQueueDrawerButton: false,
         sidebarCollapsedNavigation: true,
         sidebarCollapseShared: false,
         sidebarItems,

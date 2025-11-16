@@ -421,11 +421,14 @@
             "title": "commands"
         },
         "home": {
-            "explore": "explore from your library",
+            "explore": "discovery",
+            "flashback": "flashback",
             "mostPlayed": "most played",
-            "newlyAdded": "newly added releases",
+            "newlyAdded": "recently added",
             "recentlyPlayed": "recently played",
             "recentlyReleased": "recently released",
+            "starredAlbums": "starred albums",
+            "starredTracks": "starred tracks",
             "title": "$t(common.home)"
         },
         "itemDetail": {
@@ -600,6 +603,10 @@
         "enableAutoTranslation": "enable auto translation",
         "enableRemote_description": "enables the remote control server to allow other devices to control the application",
         "enableRemote": "enable remote control server",
+        "enableScanlineEffect_description": "enable the animated scanline visual effect across the application",
+        "enableScanlineEffect": "enable scanline effect",
+        "enableShimmerEffect_description": "enable the animated shimmer visual effect across the application",
+        "enableShimmerEffect": "enable shimmer effect",
         "exitToTray_description": "exit the application to the system tray",
         "exitToTray": "exit to tray",
         "exportImportSettings_control_description": "export and import settings via JSON",
