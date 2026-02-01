@@ -969,13 +969,41 @@ export const useSettingsStore = createWithEqualityFn<SettingsSlice>()(
                         state.general.artistBackground = initialState.general.artistBackground;
                     }
 
+                    const hasFolders = state.general.sidebarItems.some(
+                        (item) => item.id === 'Folders',
+                    );
+
+                    if (!hasFolders) {
+                        state.general.sidebarItems.push({
+                            disabled: false,
+                            id: 'Folders',
+                            label: i18n.t('page.sidebar.folders'),
+                            route: AppRoute.LIBRARY_FOLDERS,
+                        });
+                    }
+
                     state.window.windowBarStyle = Platform.LINUX;
+                }
+
+                if (version === 10) {
+                    const hasFolders = state.general.sidebarItems?.some(
+                        (item) => item.id === 'Folders',
+                    );
+
+                    if (!hasFolders) {
+                        state.general.sidebarItems.push({
+                            disabled: false,
+                            id: 'Folders',
+                            label: i18n.t('page.sidebar.folders'),
+                            route: AppRoute.LIBRARY_FOLDERS,
+                        });
+                    }
                 }
 
                 return persistedState;
             },
             name: 'store_settings',
-            version: 10,
+            version: 11,
         },
     ),
 );
