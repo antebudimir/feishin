@@ -336,18 +336,6 @@ export const FullScreenPlayer = () => {
         isOpenedRef.current = true;
     }, [location, setStore]);
 
-    const currentSong = usePlayerSong();
-    const { background } = useFastAverageColor({
-        algorithm: 'dominant',
-        src: currentSong?.imageUrl,
-        srcLoaded: true,
-    });
-
-    // Convert RGB to RGB with opacity for scanline effect
-    const scanlineColor = background
-        ? background.replace('rgb', 'rgba').replace(')', ', 0.15)')
-        : 'rgba(0, 255, 255, 0.15)';
-
     return (
         <PlayerContainer
             dynamicBackground={effectiveDynamicBackground}
@@ -370,14 +358,6 @@ export const FullScreenPlayer = () => {
             <BackgroundImageOverlay
                 dynamicBackground={effectiveDynamicBackground}
                 dynamicImageBlur={dynamicImageBlur}
-            />
-            <div
-                className={styles.scanlineOverlay}
-                style={
-                    {
-                        '--album-color': scanlineColor,
-                    } as CSSProperties
-                }
             />
             <div className={styles.responsiveContainer}>
                 <div
