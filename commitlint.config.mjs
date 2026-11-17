@@ -1,7 +1,10 @@
 /** @type {import('@commitlint/types').UserConfig} */
 const config = {
     extends: ['@commitlint/config-conventional'],
-    ignores: [(commit) => commit.includes('Translated using Weblate')],
+    ignores: [
+        (commit) => commit.includes('Translated using Weblate'),
+        (commit) => commit.startsWith('Merge'),
+    ],
     rules: {
         'scope-enum': [
             2,
